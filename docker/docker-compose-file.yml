@@ -1,0 +1,38 @@
+services:
+  python:
+    image: python:3.10
+    container_name: test
+    ports:
+      - "8080:800"
+    volumes:
+       - ../app:/app
+    shm_size: '8gb'
+    privileged: true
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    working_dir: /app
+    command: python3 main.py
+    networks:
+      - efk_network
+    stdin_open: true
+    tty: true
+    restart: always
+
+  fluentd:
+    build:
+      context: ../fluentd
+      dockerfile: dockerfile
+    container_name: fluentd_container
+    volumes:
+      - ../fluentd/conf:/fluentd/etc
+      - ../app/logs:/app/logs
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - efk_network
+
+networks:
+  efk_network:
+    driver: bridge

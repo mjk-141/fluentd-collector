@@ -1,0 +1,39 @@
+services:
+  test:
+    image: httpd
+    container_name: test
+    restart: always
+    ports:
+      - '80:80'
+    shm_size: '8gb'
+    privileged: true
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+        fluentd-async-connect: "true"
+        tag: httpd.access
+    networks:
+      - efk_network
+    depends_on:
+      - fluentd
+
+  fluentd:
+    build:
+      context: ../fluentd
+      dockerfile: Dockerfile
+    container_name: fluentd_container
+    volumes:
+      - ../fluentd/conf:/fluentd/etc
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - efk_network
+
+networks:
+  efk_network:
+    driver: bridge
