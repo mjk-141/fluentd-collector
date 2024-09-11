@@ -1,14 +1,12 @@
 # fluentd-collector
-## 1-1. 전체 컨테이너 구성(워크플로우)
+## 1. 전체 컨테이너 구성(워크플로우)
 ![fluentd-collector](https://github.com/user-attachments/assets/8942989d-e3a9-4619-93fe-da3b1a342bcb)
 - 로그 보낼 서버(파이썬, 스프링, 아파치 등등) → fluentd → aggregator(선택사항) → elasticsearch → kibana
 
 ![fluentd-info](./assets/fluentd-info.png)
 
-## Fluentd로 파일 로그 수집
----
-### 바로 Elastic이나 Opensearch로 보낼 시..
----
+## 2. Fluentd로 파일 로그 수집
+### 2-1. 바로 Elastic이나 Opensearch로 보낼 시
 ```
 ## 로그 파일 전달
 <source>
@@ -42,8 +40,7 @@
 </match>
 ```
 
-### aggregator을 통해서 전달시
----
+### 2-2.aggregator을 통해서 전달시
 ```
 ## 컨테이너 로그 전달
 <source>
@@ -80,10 +77,8 @@
 </match>
 ```
 
-## Fluentd로 컨테이너 로그 수집
----
-### 바로 Elastic이나 Opensearch로 보낼 시..
----
+## 3. Fluentd로 컨테이너 로그 수집
+### 3-1. 바로 Elastic이나 Opensearch로 보낼 시..
 ```
 <source>
   @type forward
@@ -109,8 +104,7 @@
     flush_interval 1s
   </buffer>
 ```
-### aggregator을 통해서 전달 시
----
+### 3-2. aggregator을 통해서 전달 시
 ```
 ## 로그 파일 전달
 <source>
@@ -150,5 +144,6 @@
   </store>
 </match>
 ```
-</match>
-```
+# 구현 화면
+![구현 화면](https://github.com/user-attachments/assets/75e45e19-b366-462e-8d3d-d594bfd1bb7d)
+
