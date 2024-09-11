@@ -5,6 +5,23 @@
 
 ![fluentd-info](./assets/fluentd-info.png)
 
+### 레포지토리 내용
+```
+├─app ## 파일로그와 컨테이너 로그 수집을 위한 테스트 파일
+├─assets
+├─docker
+|   ├─docker-compose-ag-container.yml ## aggregator 사용 시 컨테이너 로그 수집
+|   ├─docker-compose-ag-file.yml  ## aggregator 사용 시 파일 로그 수집
+|   ├─docker-compose-container.yml ## 컨테이너 로그 수집
+|   └─docker-compose-file.yml ## 파일 로그 수집
+└─fluentd
+    ├─aggregator ## aggregator 사용
+    │  ├─container
+    │  └─file
+    └─conf ## 그냥
+        ├─container
+        └─file
+```
 ## 2. Fluentd로 파일 로그 수집
 ### 2-1. 바로 Elastic이나 Opensearch로 보낼 시
 ```
